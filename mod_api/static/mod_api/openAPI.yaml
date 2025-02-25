@@ -23,7 +23,7 @@ components:
 
   parameters:
     format_param:
-      description: | 
+      description: |
         The response format.
         
         This will override any value of `Accept` in the request headers.
@@ -40,7 +40,7 @@ components:
       in: query
       schema:
         type: string
-        enum: 
+        enum:
           - html
           - jsonld
           - ttl
@@ -123,11 +123,13 @@ components:
             $ref: "./sa_ttl.yaml"
         application/ld+json:
           schema:
-            allOf:
-              - type: object
-                title: Context
+            type: object
+            title: Semantic Artefact
+            properties:
+              '@context':
                 $ref: "#/components/schemas/Context"
-              - $ref: "#/components/schemas/modSemanticArtefact"
+              mod:SemanticArtefact:
+                $ref: "#/components/schemas/modSemanticArtefact"
         application/rdf+xml:
           schema:
             type: array
@@ -151,15 +153,16 @@ components:
               $ref: "./sa_ttl.yaml"
         application/ld+json:
           schema:
-            allOf:
-              - type: object
-                title: Pagination
-                $ref: "#/components/schemas/Pagination"
-              - type: object
-                title: Context
+            type: object
+            title: List of Semantic Artefacts
+            properties:
+              '@context':
                 $ref: "#/components/schemas/Context"
-              - type: array
-                title: List of Semantic Artefact
+              pagination:
+                $ref: "#/components/schemas/Pagination"
+              artefacts:
+                type: array
+                description: List of Semantic Artefact
                 items:
                   $ref: "#/components/schemas/modSemanticArtefact"
         application/rdf+xml:
@@ -183,11 +186,13 @@ components:
             type: string
         application/ld+json:
           schema:
-            allOf:
-              - type: object
-                title: Context
+            type: object
+            title: Semantic Artefact Catalog
+            properties:
+              '@context':
                 $ref: "#/components/schemas/Context"
-              - $ref: "#/components/schemas/modSemanticArtefactCatalog"
+              mod:SemanticArtefactCatalog:
+                $ref: "#/components/schemas/modSemanticArtefactCatalog"
         application/rdf+xml:
           schema:
             type: array
@@ -208,10 +213,16 @@ components:
             type: string
         application/ld+json:
           schema:
-            type: array
-            title: List of Owl Classes
-            items:
-              $ref: "#/components/schemas/owlClass"
+            type: object
+            title: List of OWL Classes
+            properties:
+              pagination:
+                $ref: "#/components/schemas/Pagination"
+              classes:
+                type: array
+                description: List of OWL Classes
+                items:
+                  $ref: "#/components/schemas/owlClass"
         application/rdf+xml:
           schema:
             type: array
@@ -232,10 +243,16 @@ components:
             type: string
         application/ld+json:
           schema:
-            type: array
+            type: object
             title: List of Skos Collections
-            items:
-              $ref: "#/components/schemas/skosCollection"
+            properties:
+              pagination:
+                $ref: "#/components/schemas/Pagination"
+              collections:
+                type: array
+                description: List of Skos Collections
+                items:
+                  $ref: "#/components/schemas/skosCollection"
         application/rdf+xml:
           schema:
             type: array
@@ -256,10 +273,16 @@ components:
             type: string
         application/ld+json:
           schema:
-            type: array
+            type: object
             title: List of Skos Concepts
-            items:
-              $ref: "#/components/schemas/skosConcept"
+            properties:
+              pagination:
+                $ref: "#/components/schemas/Pagination"
+              concepts:
+                type: array
+                description: List of Skos Concepts
+                items:
+                  $ref: "#/components/schemas/skosConcept"
         application/rdf+xml:
           schema:
             type: array
@@ -280,11 +303,13 @@ components:
             type: string
         application/ld+json:
           schema:
-            allOf:
-              - type: object
-                title: Context
+            type: object
+            title: Semantic Artefact Distribution
+            properties:
+              '@context':
                 $ref: "#/components/schemas/Context"
-              - $ref: "#/components/schemas/modSemanticArtefactDistribution"
+              mod:SemanticArtefactDistribution:
+                $ref: "#/components/schemas/modSemanticArtefactDistribution"
         application/rdf+xml:
           schema:
             type: array
@@ -309,12 +334,16 @@ components:
               type: string
         application/ld+json:
           schema:
-            allOf:
-              - type: object
-                title: Context
+            type: object
+            title: List of Semantic Artefact Distributions
+            properties:
+              '@context':
                 $ref: "#/components/schemas/Context"
-              - type: array
-                title: List of Semantic Artefact Distributions
+              pagination:
+                $ref: "#/components/schemas/Pagination"
+              distributions:
+                type: array
+                description: List of Semantic Artefact Distributions
                 items:
                   $ref: "#/components/schemas/modSemanticArtefactDistribution"
         application/rdf+xml:
@@ -337,10 +366,16 @@ components:
             type: string
         application/ld+json:
           schema:
-            type: array
-            title: List of Owl Individuals
-            items:
-              $ref: "#/components/schemas/owlNamedIndividual"
+            type: object
+            title: List of OWL Individuals
+            properties:
+              pagination:
+                $ref: "#/components/schemas/Pagination"
+              individuals:
+                type: array
+                description: List of OWL Individuals
+                items:
+                  $ref: "#/components/schemas/owlNamedIndividual"
         application/rdf+xml:
           schema:
             type: array
@@ -361,10 +396,16 @@ components:
             type: string
         application/ld+json:
           schema:
-            type: array
+            type: object
             title: List of RDFS Properties
-            items:
-              $ref: "#/components/schemas/rdfsProperty"
+            properties:
+              pagination:
+                $ref: "#/components/schemas/Pagination"
+              properties:
+                type: array
+                description: List of RDFS Properties
+                items:
+                  $ref: "#/components/schemas/rdfsProperty"
         application/rdf+xml:
           schema:
             type: array
@@ -385,11 +426,13 @@ components:
             type: string
         application/ld+json:
           schema:
-            allOf:
-              - type: object
-                title: Context
+            type: object
+            title: Semantic Artefact Catalog Record
+            properties:
+              '@context':
                 $ref: "#/components/schemas/Context"
-              - $ref: "#/components/schemas/modSemanticArtefactCatalogRecord"
+              mod:SemanticArtefactCatalogRecord:
+                $ref: "#/components/schemas/modSemanticArtefactCatalogRecord"
         application/rdf+xml:
           schema:
             type: array
@@ -414,12 +457,16 @@ components:
               type: string
         application/ld+json:
           schema:
-            allOf:
-              - type: object
-                title: Context
+            type: object
+            title: List of Semantic Artefact Catalog Records
+            properties:
+              '@context':
                 $ref: "#/components/schemas/Context"
-              - type: array
-                title: List of Semantic Artefact Catalog Records
+              pagination:
+                $ref: "#/components/schemas/Pagination"
+              records:
+                type: array
+                description: List of Semantic Artefact Catalog Records
                 items:
                   $ref: "#/components/schemas/modSemanticArtefactCatalogRecord"
         application/rdf+xml:
@@ -431,7 +478,7 @@ components:
             items:
               example: In progress
 
-    resources:
+    resource:
       description: "OK"
       content:
         text/html:
@@ -454,7 +501,7 @@ components:
             items:
               example: In progress
 
-    resource:
+    resources:
       description: "OK"
       content:
         text/html:
@@ -465,10 +512,16 @@ components:
             type: string
         application/ld+json:
           schema:
-            type: array
+            type: object
             title: List of RDFS Resources
-            items:
-              $ref: "#/components/schemas/rdfsResource"
+            properties:
+              pagination:
+                $ref: "#/components/schemas/Pagination"
+              resources:
+                type: array
+                description: List of RDFS Resources
+                items:
+                  $ref: "#/components/schemas/rdfsResource"
         application/rdf+xml:
           schema:
             type: array
@@ -489,10 +542,16 @@ components:
             type: string
         application/ld+json:
           schema:
-            type: array
+            type: object
             title: List of Skos Schemes
-            items:
-              $ref: "#/components/schemas/skosScheme"
+            properties:
+              pagination:
+                $ref: "#/components/schemas/Pagination"
+              schemes:
+                type: array
+                description: List of Skos Schemes
+                items:
+                  $ref: "#/components/schemas/skosScheme"
         application/rdf+xml:
           schema:
             type: array
@@ -513,39 +572,55 @@ components:
             type: string
         application/ld+json:
           schema:
-            oneOf:
-              - type: array
-                title: List of Semantic Artefacts
-                items:
-                  $ref: "#/components/schemas/modSemanticArtefact"
-              - type: array
-                title: List of Owl Classes
-                items:
-                  $ref: "#/components/schemas/owlClass"
-              - type: array
-                title: List of Skos Collections
-                items:
-                  $ref: "#/components/schemas/skosCollection"
-              - type: array
-                title: List of Skos Concepts
-                items:
-                  $ref: "#/components/schemas/skosConcept"
-              - type: array
-                title: List of Owl Individuals
-                items:
-                  $ref: "#/components/schemas/owlNamedIndividual"
-              - type: array
-                title: List of RDFS Properties
-                items:
-                  $ref: "#/components/schemas/rdfsProperty"
-              - type: array
-                title: List of RDFS Resources
-                items:
-                  $ref: "#/components/schemas/rdfsResource"
-              - type: array
-                title: List of Skos Schemes
-                items:
-                  $ref: "#/components/schemas/skosScheme"
+            type: object
+            title: Search Results
+            properties:
+              pagination:
+                $ref: "#/components/schemas/Pagination"
+              results:
+                oneOf:
+                  - type: array
+                    title: artefacts
+                    description: List of Semantic Artefacts
+                    items:
+                     $ref: "#/components/schemas/modSemanticArtefact"
+                  - type: array
+                    title: classes
+                    description: List of OWL Classes
+                    items:
+                      $ref: "#/components/schemas/owlClass"
+                  - type: array
+                    title: collections
+                    description: List of Skos Collections
+                    items:
+                      $ref: "#/components/schemas/skosCollection"
+                  - type: array
+                    title: concepts
+                    description: List of Skos Concepts
+                    items:
+                      $ref: "#/components/schemas/skosConcept"
+                  - type: array
+                    title: individuals
+                    description: List of OWL Named Individuals
+                    items:
+                      $ref: "#/components/schemas/owlNamedIndividual"
+                  - type: array
+                    title: properties
+                    description: List of RDFS Properties
+                    items:
+                      $ref: "#/components/schemas/rdfsProperty"
+                  - type: array
+                    title: resources
+                    description: List of RDFS Resources
+                    items:
+                      $ref: "#/components/schemas/rdfsResource"
+                  - type: array
+                    title: schemes
+                    description: List of Skos Schemes
+                    items:
+                      $ref: "#/components/schemas/skosScheme"
+                discriminator:
+                  propertyName: '@type'
         application/rdf+xml:
           schema:
             type: array
@@ -566,35 +641,50 @@ components:
             type: string
         application/ld+json:
           schema:
-            oneOf:
-              - type: array
-                title: List of Owl Classes
-                items:
-                  $ref: "#/components/schemas/owlClass"
-              - type: array
-                title: List of Skos Collections
-                items:
-                  $ref: "#/components/schemas/skosCollection"
-              - type: array
-                title: List of Skos Concepts
-                items:
-                  $ref: "#/components/schemas/skosConcept"
-              - type: array
-                title: List of Owl Individuals
-                items:
-                  $ref: "#/components/schemas/owlNamedIndividual"
-              - type: array
-                title: List of RDFS Properties
-                items:
-                  $ref: "#/components/schemas/rdfsProperty"
-              - type: array
-                title: List of RDFS Resources
-                items:
-                  $ref: "#/components/schemas/rdfsResource"
-              - type: array
-                title: List of Skos Schemes
-                items:
-                  $ref: "#/components/schemas/skosScheme"
+            type: object
+            title: Content Search Results
+            properties:
+              pagination:
+                $ref: "#/components/schemas/Pagination"
+              results:
+                oneOf:
+                  - type: array
+                    title: classes
+                    description: List of OWL Classes
+                    items:
+                      $ref: "#/components/schemas/owlClass"
+                  - type: array
+                    title: collections
+                    description: List of Skos Collections
+                    items:
+                      $ref: "#/components/schemas/skosCollection"
+                  - type: array
+                    title: concepts
+                    description: List of Skos Concepts
+                    items:
+                      $ref: "#/components/schemas/skosConcept"
+                  - type: array
+                    title: individuals
+                    description: List of OWL Named Individuals
+                    items:
+                      $ref: "#/components/schemas/owlNamedIndividual"
+                  - type: array
+                    title: properties
+                    description: List of RDFS Properties
+                    items:
+                      $ref: "#/components/schemas/rdfsProperty"
+                  - type: array
+                    title: resources
+                    description: List of RDFS Resources
+                    items:
+                      $ref: "#/components/schemas/rdfsResource"
+                  - type: array
+                    title: schemes
+                    description: List of Skos Schemes
+                    items:
+                      $ref: "#/components/schemas/skosScheme"
+                discriminator:
+                  propertyName: '@type'
         application/rdf+xml:
           schema:
             type: array
@@ -615,10 +705,13 @@ components:
             type: string
         application/ld+json:
           schema:
-              type: array
-              title: List of Semantic Artefacts
-              items:
-                  $ref: "#/components/schemas/modSemanticArtefact"
+            title: Metadata Search Results
+            type: object
+            properties:
+              '@context':
+                $ref: "#/components/schemas/Context"
+              mod:SemanticArtefact:
+                $ref: "#/components/schemas/modSemanticArtefact"
         application/rdf+xml:
           schema:
             type: array
@@ -648,70 +741,68 @@ components:
 
     Context:
       type: object
+      description: The context lists the prefixes and associated URLs
       properties:
-        '@context':
-          type: object
-          properties:
-            adms:
-              title: adms
-              example: http://www.w3.org/ns/adms#
-            cc:
-              title: cc
-              example: http://creativecommons.org/ns#
-            dc:
-              title: dc
-              example: http://purl.org/dc/elements/1.1/
-            dcat:
-              title: dcat
-              example: http://www.w3.org/ns/dcat#
-            dcterms:
-              title: dcterms
-              example: http://purl.org/dc/terms/
-            doap:
-              title: doap
-              example: http://usefulinc.com/ns/doap#
-            foaf:
-              title: foaf
-              example: http://xmlns.com/foaf/0.1/
-            mod:
-              title: mod
-              example: https://w3id.org/mod#
-            odrl:
-              title: odrl
-              example: http://www.w3.org/ns/odrl/2/
-            owl:
-              title: owl
-              example: http://www.w3.org/2002/07/owl#
-            prov:
-              title: prov
-              example: http://www.w3.org/ns/prov#
-            rdf:
-              title: rdf
-              example: http://www.w3.org/1999/02/22-rdf-syntax-ns#
-            rdfs:
-              title: rdfs
-              example: http://www.w3.org/2000/01/rdf-schema#
-            schema:
-              title: schema
-              example: https://schema.org/
-            sd:
-              title: sd
-              example: http://www.w3.org/ns/sparql-service-description#
-            skos:
-              title: skos
-              example: http://www.w3.org/2004/02/skos/core#
-            vann:
-              title: vann
-              example: https://vocab.org/vann/
-            vcard:
-              title: vcard
-              example: http://www.w3.org/2006/vcard/ns#
-            void:
-              title: void
-              example: http://rdfs.org/ns/void#
-            xsd:
-              title: xsd
-              example: http://www.w3.org/2001/XMLSchema#
+        adms:
+          title: adms
+          example: http://www.w3.org/ns/adms#
+        cc:
+          title: cc
+          example: http://creativecommons.org/ns#
+        dc:
+          title: dc
+          example: http://purl.org/dc/elements/1.1/
+        dcat:
+          title: dcat
+          example: http://www.w3.org/ns/dcat#
+        dcterms:
+          title: dcterms
+          example: http://purl.org/dc/terms/
+        doap:
+          title: doap
+          example: http://usefulinc.com/ns/doap#
+        foaf:
+          title: foaf
+          example: http://xmlns.com/foaf/0.1/
+        mod:
+          title: mod
+          example: https://w3id.org/mod#
+        odrl:
+          title: odrl
+          example: http://www.w3.org/ns/odrl/2/
+        owl:
+          title: owl
+          example: http://www.w3.org/2002/07/owl#
+        prov:
+          title: prov
+          example: http://www.w3.org/ns/prov#
+        rdf:
+          title: rdf
+          example: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+        rdfs:
+          title: rdfs
+          example: http://www.w3.org/2000/01/rdf-schema#
+        schema:
+          title: schema
+          example: https://schema.org/
+        sd:
+          title: sd
+          example: http://www.w3.org/ns/sparql-service-description#
+        skos:
+          title: skos
+          example: http://www.w3.org/2004/02/skos/core#
+        vann:
+          title: vann
+          example: https://vocab.org/vann/
+        vcard:
+          title: vcard
+          example: http://www.w3.org/2006/vcard/ns#
+        void:
+          title: void
+          example: http://rdfs.org/ns/void#
+        xsd:
+          title: xsd
+          example: http://www.w3.org/2001/XMLSchema#
 
     admsAsset:
       type: object
@@ -1507,9 +1598,7 @@ components:
             '@id':
               example: https://example.org/SemanticArtefact/SemanticArtefactID
             '@type':
-              type: array
-              items:
-                example: mod:SemanticArtefact
+              example: mod:SemanticArtefact
         -  $ref: '#/components/schemas/dcatResource'
         - type: object
           properties:
@@ -2480,15 +2569,19 @@ components:
 
     owlClass:
       type: object
+      description: An owl class.
       properties:
+        '@id':
+          example: https://example.org/ExampleClass/ExampleClassID
         '@type':
           title: Class
-          description: An owl class.
           example: owl:Class
 
     owlNamedIndividual:
       type: object
       properties:
+        '@id':
+          example: https://example.org/NamedIndividual/NamedIndividualID
         '@type':
           title: NamedIndividual
           description: The class of named individuals.
@@ -2508,22 +2601,20 @@ components:
 
     Pagination:
       type: object
+      description: URLs to navigate through the results
       properties:
-        'pagination':
-          type: object
-          properties:
-            firstPage:
-              title: first page
-              description: The URL of the first page of the results
-              example: 'https://example.org/ont1?page=1&pagesize=50'
-            previousPage:
-              title: previous page
-              description: The URL of the previous page of the results
-              example: 'https://example.org/ont1?page=3&pagesize=50'
-            nextPage:
-              title: next page
-              description: The URL of the next page of the results
-              example: 'https://example.org/ont1?page=5&pagesize=50'
+        firstPage:
+          title: first page
+          description: The URL of the first page of the results
+          example: 'https://example.org/ont1?page=1&pagesize=50'
+        previousPage:
+          title: previous page
+          description: The URL of the previous page of the results
+          example: 'https://example.org/ont1?page=3&pagesize=50'
+        nextPage:
+          title: next page
+          description: The URL of the next page of the results
+          example: 'https://example.org/ont1?page=5&pagesize=50'
 
     pavCreatedWith:
       type: object
@@ -3029,14 +3120,12 @@ paths:
         "404":
           $ref: "#/components/responses/error_message"
 
-  # Get a list of all the resources within an artefact
+  # Get a resource within an artefact
   /artefacts/{artefactID}/resources/{resourceID}:
     parameters:
       - $ref: "#/components/parameters/artefactID"
       - $ref: "#/components/parameters/resourceID"
       - $ref: "#/components/parameters/format_param"
-      - $ref: "#/components/parameters/page"
-      - $ref: "#/components/parameters/pagesize"
 
     get:
       tags:
@@ -3195,6 +3284,8 @@ paths:
     parameters:
       - $ref: "#/components/parameters/format_param"
       - $ref: "#/components/parameters/query"
+      - $ref: "#/components/parameters/page"
+      - $ref: "#/components/parameters/pagesize"
       - $ref: "#/components/parameters/display"
 
     get:
@@ -3214,6 +3305,8 @@ paths:
     parameters:
       - $ref: "#/components/parameters/format_param"
       - $ref: "#/components/parameters/query"
+      - $ref: "#/components/parameters/page"
+      - $ref: "#/components/parameters/pagesize"
 
     get:
       tags:
@@ -3232,6 +3325,8 @@ paths:
     parameters:
       - $ref: "#/components/parameters/format_param"
       - $ref: "#/components/parameters/query"
+      - $ref: "#/components/parameters/page"
+      - $ref: "#/components/parameters/pagesize"
       - $ref: "#/components/parameters/display"
 
     get:
