@@ -543,13 +543,13 @@ components:
         application/ld+json:
           schema:
             type: object
-            title: List of Skos Schemes
+            title: List of Skos Concept Schemes
             properties:
               pagination:
                 $ref: "#/components/schemas/Pagination"
               schemes:
                 type: array
-                description: List of Skos Schemes
+                description: List of Skos Concept Schemes
                 items:
                   $ref: "#/components/schemas/skosScheme"
         application/rdf+xml:
@@ -615,8 +615,8 @@ components:
                     items:
                       $ref: "#/components/schemas/rdfsResource"
                   - type: array
-                    title: schemes
-                    description: List of Skos Schemes
+                    title: concept schemes
+                    description: List of Skos Concept Schemes
                     items:
                       $ref: "#/components/schemas/skosScheme"
                 discriminator:
@@ -679,8 +679,8 @@ components:
                     items:
                       $ref: "#/components/schemas/rdfsResource"
                   - type: array
-                    title: schemes
-                    description: List of Skos Schemes
+                    title: concept schemes
+                    description: List of Skos Concept Schemes
                     items:
                       $ref: "#/components/schemas/skosScheme"
                 discriminator:
@@ -3219,7 +3219,7 @@ paths:
         "404":
           $ref: "#/components/responses/error_message"
 
-  # Get a list of all the skos:Scheme within an artefact
+  # Get a list of all the skos:ConceptScheme within an artefact
   /artefacts/{artefactID}/resources/schemes:
     parameters:
       - $ref: "#/components/parameters/artefactID"
@@ -3230,8 +3230,8 @@ paths:
     get:
       tags:
         - Artefact
-      summary: Get a list of all the skos:Scheme within an artefact.
-      description: Retrieves a list of all the skos:Scheme within an artefact.
+      summary: Get a list of all the skos:ConceptScheme within an artefact.
+      description: Retrieves a list of all the skos:ConceptScheme within an artefact.
       operationId: getArtefactSchemes
       responses:
         "200":
