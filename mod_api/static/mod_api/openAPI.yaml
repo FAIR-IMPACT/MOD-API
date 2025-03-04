@@ -1503,31 +1503,108 @@ components:
       description: Semantic Artefact is defined here as a machine-actionable and -readable formalisation of a conceptualisation enabling sharing and reuse by humans and machines. These artefacts may have a broad range of formalisation, from loose set of terms, taxonomies, thesauri to higher-order logics, and include the concepts/terms/classes constituting these. Moreover, semantic artefacts are serialised using a variety of digital representation formats, e.g., RDF Turtle, OWL-RDF, XML, JSON-LD.
       allOf:
         - type: object
+          required:
+            - '@id'
+            - '@type'
+            - 'mod:acronym'
+            - 'dcterms:description'
+            - 'mod:status'
+            - 'mod:URI'
+            - 'owl:versionIRI'
+            - 'dcterms:accessRights'
+            - 'dcterms:license'
+            - 'dcat:contactPoint'
+            - 'dcterms:creator'
+            - 'dcterms:identifier'
+            - 'dcat:keyword'
+            - 'dcat:landingPage'
+            - 'dcterms:language'
+            - 'dcterms:publisher'
+            - 'dcterms:subject'
+            - 'dcterms:title'
+            - 'dcterms:accrualMethod'
+            - 'dcterms:accrualPeriodicity'
+            - 'dcterms:bibliographicCitation'
+            - 'dcterms:contributor'
+            - 'dcterms:coverage'
+            - 'dcterms:hasFormat'
+            - 'dcterms:rightsHolder'
+            - 'mod:competencyQuestion'
+            - 'mod:semanticArtefactRelation'
+            - 'pav:createdWith'
+            - 'prov:wasGeneratedBy'
+            - 'schema:includedInDataCatalog'
           properties:
+            # required properties
             '@id':
               example: https://example.org/SemanticArtefact/SemanticArtefactID
             '@type':
               type: array
               items:
                 example: mod:SemanticArtefact
-        -  $ref: '#/components/schemas/dcatResource'
-        - type: object
-          properties:
-            cc:useGuidelines:
-              title: use guidelines
-              description: A related resource which defines non-binding use guidelines for the work.
-              $ref: "#/components/schemas/rdfsResource"
-            cc:morePermissions:
-              title: more permissions
-              description: A related resource which describes additional permissions or alternative licenses for a Work which may be available.
-              $ref: "#/components/schemas/rdfsResource"
-            foaf:primaryTopic:
-              title: key classes
-              $ref: "#/components/schemas/owlThing"
-            dcterms:abstract:
-              title: abstract
-              description: A summary of the resource.
-              $ref: "#/components/schemas/dctermsAbstract"
+            mod:acronym:
+              title: acronym
+              description: Short acronym label, often used as an identifier within some ontology platforms such as BioPortal or OBO Foundry.
+              $ref: "#/components/schemas/xsdString"
+            dcterms:description:
+              title: description
+              description: A free-text account of the item.
+              $ref: "#/components/schemas/dctermsIdentifier"
+            mod:status:
+              title: status
+              $ref: "#/components/schemas/xsdString"
+            mod:URI:
+              title: URI
+              description: The URI of the ontology which is described by this metadata.
+              $ref: "#/components/schemas/xsdAnyURI"
+            owl:versionIRI:
+              title: version IRI
+              description: The property that identifies the version IRI of an ontology.      
+              $ref: "#/components/schemas/owlOntology"
+            dcterms:accessRights:
+              title: access rights
+              description: Information about who can access the resource or an indication of its security status.
+              $ref: "#/components/schemas/dctermsRightsStatement"
+            dcterms:license:
+              title: license
+              description: A legal document under which the resource is made available.
+              $ref: "#/components/schemas/dctermsLicenseDocument"
+            dcat:contactPoint:
+              title: contact point
+              description: Relevant contact information for the cataloged resource. Use of vCard is recommended [VCARD-RDF].
+              $ref: "#/components/schemas/vcardKind"
+            dcterms:creator:
+              title: resource creator
+              description: The entity responsible for producing the resource.
+              $ref: "#/components/schemas/foafAgent"
+            dcterms:identifier:
+              title: identifier
+              description: A unique identifier of the item.
+              $ref: "#/components/schemas/dctermsIdentifier"
+            dcat:keyword:
+              title:  keyword/tag
+              description: A keyword or tag describing the resource.
+              $ref: "#/components/schemas/dctermsIdentifier"
+            dcat:landingPage:
+              title: landing page
+              description: A Web page that can be navigated to in a Web browser to gain access to the catalog, a dataset, its distributions and/or additional information.
+              $ref: "#/components/schemas/foafDocument"
+            dcterms:language:
+              title: language
+              description: A language of the item. This refers to the natural language used for textual metadata (i.e. titles, descriptions, etc) of a cataloged resource (i.e. dataset or service) or the textual values of a dataset distribution
+              $ref: "#/components/schemas/dctermsLinguisticSystem"
+            dcterms:publisher:
+              title: publisher
+              descrip#tion: The entity responsible for making the item available.
+              $ref: "#/components/schemas/foafAgent"
+            dcterms:subject:
+              title: theme/category
+              description: A main category of the resource. A resource can have multiple themes.
+              $ref: "#/components/schemas/skosConcept"
+            dcterms:title:
+              title: title
+              description: A name given to the item.
+              $ref: "#/components/schemas/dctermsIdentifier"
             dcterms:accrualMethod:
               title: accrual method
               description: The method by which items are added to a collection. Recommended practice is to use a value from the Collection Description Accrual Method Vocabulary.
@@ -1536,18 +1613,6 @@ components:
               title: accrual periodicity
               description: The frequency with which items are added to a collection. Recommended practice is to use a value from the Collection Description Frequency Vocabulary.
               $ref: "#/components/schemas/dctermsAccrualPeriodicity"
-            dcterms:accrualPolicy:
-              title: accrual policy
-              description: The policy governing the addition of items to a collection. Recommended practice is to use a value from the Collection Description Accrual Policy Vocabulary.
-              $ref: "#/components/schemas/dctermsAccrualPolicy"
-            dcterms:alternative:
-              title: alternative name
-              description: An alternative name for the resource.
-              $ref: "#/components/schemas/rdfsLiteral"
-            dcterms:audience:
-              title: target audience
-              description: A class of agents for whom the resource is intended or useful.
-              $ref: "#/components/schemas/dctermsAudience"
             dcterms:bibliographicCitation:
               title: bibliographic reference
               description: A bibliographic reference for the resource.
@@ -1564,6 +1629,101 @@ components:
               title: has format
               description: A related resource that is substantially the same as the pre-existing described resource, but in another format.
               $ref: "#/components/schemas/dctermsHasFormat"
+            dcterms:rightsHolder:
+              title: rights holder
+              description: The person who can be contacted to enquire about an ontology.
+              $ref: "#/components/schemas/dctermsRightsHolder"
+            mod:competencyQuestion:
+              title: competency question
+              description: A set of questions made to build an ontology at the design time.
+              $ref: "#/components/schemas/xsdString"
+            mod:semanticArtefactRelation:
+              title: generally related to
+              description: A general property for semantic artefact relations.
+              $ref: "#/components/schemas/modSemanticArtefact"
+            pav:createdWith:
+              title: created with
+              description: The tool used for the creation of an ontology.
+              $ref: "#/components/schemas/pavCreatedWith"
+            prov:wasGeneratedBy:
+              title: was generated by
+              description: Generation is the completion of production of a new entity by an activity. This entity did not exist before generation and becomes available for usage after this generation.
+              $ref: "#/components/schemas/provActivity"
+            schema:includedInDataCatalog:
+              title: indexed or included in catalog or repository
+              description: A data catalog which contains this dataset.
+              $ref: "#/components/schemas/schemaIncludedInDataCatalog"
+
+        - type: object
+          # Optional properties
+          properties:
+            dcterms:conformsTo:
+              title: conforms to
+              description: An established standard to which the described resource conforms.
+              $ref: "#/components/schemas/dctermsStandard"
+            odrl:hasPolicy:
+              title: has policy
+              description: An ODRL conformant policy expressing the rights associated with the resource.
+              $ref: "#/components/schemas/odrlPolicy"
+            dcterms:isReferencedBy:
+              title: is referenced by
+              description: A related resource, such as a publication, that references, cites, or otherwise points to the cataloged resource.
+              $ref: "#/components/schemas/dctermsIsReferencedBy"
+            dcterms:issued:
+              title: release date
+              description: Date of formal issuance (e.g., publication) of the item.
+              $ref: "#/components/schemas/dctermsIdentifier"
+            dcterms:modified:
+              title: update/modification date
+              description: Most recent date on which the item was changed, updated or modified.
+              $ref: "#/components/schemas/rdfsLiteral"
+            prov:qualifiedAttribution:
+              title: qualified attribution
+              description: Link to an Agent having some form of responsibility for the resource
+              $ref: "#/components/schemas/provAttribution"
+            dcat:qualifiedRelation:
+              title: qualified relation
+              description: Link to a description of a relationship with another resource.
+              $ref: "#/components/schemas/dcatResource"
+            dcterms:relation:
+              title: resource relation
+              description: A resource with an unspecified relationship to the cataloged item.
+              $ref: "#/components/schemas/dctermsRelation"
+            dcterms:rights:
+              title: rights
+              description: A statement that concerns all rights not addressed with dcterms:license or dcterms:accessRights, such as copyright statements.
+              $ref: "#/components/schemas/dctermsRightsStatement"
+            dcterms:type:
+              title: type/genre
+              description: The nature or genre of the resource.
+              $ref: "#/components/schemas/dcType"
+            cc:useGuidelines:
+              title: use guidelines
+              description: A related resource which defines non-binding use guidelines for the work.
+              $ref: "#/components/schemas/rdfsResource"
+            cc:morePermissions:
+              title: more permissions
+              description: A related resource which describes additional permissions or alternative licenses for a Work which may be available.
+              $ref: "#/components/schemas/rdfsResource"
+            foaf:primaryTopic:
+              title: key classes
+              $ref: "#/components/schemas/owlThing"
+            dcterms:abstract:
+              title: abstract
+              description: A summary of the resource.
+              $ref: "#/components/schemas/dctermsAbstract"
+            dcterms:accrualPolicy:
+              title: accrual policy
+              description: The policy governing the addition of items to a collection. Recommended practice is to use a value from the Collection Description Accrual Policy Vocabulary.
+              $ref: "#/components/schemas/dctermsAccrualPolicy"
+            dcterms:alternative:
+              title: alternative name
+              description: An alternative name for the resource.
+              $ref: "#/components/schemas/rdfsLiteral"
+            dcterms:audience:
+              title: target audience
+              description: A class of agents for whom the resource is intended or useful.
+              $ref: "#/components/schemas/dctermsAudience"
             dcterms:hasPart:
               title: has part (has view)
               description: A related resource that is included either physically or logically in the described resource.
@@ -1580,10 +1740,6 @@ components:
               title: is part of (view of)
               description: Shall be used to identify a subset or a view of an ontology.
               $ref: "#/components/schemas/dctermsIsPartOf"
-            dcterms:rightsHolder:
-              title: rights holder
-              description: The person who can be contacted to enquire about an ontology.
-              $ref: "#/components/schemas/dctermsRightsHolder"
             dcterms:source:
               title: source
               description: SThe ontology(ies) referred to while creating the present ontology.
@@ -1616,10 +1772,6 @@ components:
               title: logo
               description: A logo representing some thing.
               $ref: "#/components/schemas/owlThing"
-            mod:acronym:
-              title: acronym
-              description: Short acronym label, often used as an identifier within some ontology platforms such as BioPortal or OBO Foundry.
-              $ref: "#/components/schemas/xsdString"
             mod:analytics:
               title: analytics
               description: This property shall be used to store any analytics for an ontology. E.g., number of visits an ontology received in a portal, number of downloads, etc.
@@ -1628,10 +1780,6 @@ components:
               title: comes from the same domain
               description: If the two ontologies come from the same domain (without any other details).
               $ref: "#/components/schemas/modComesFromTheSameDomain"
-            mod:competencyQuestion:
-              title: competency question
-              description: A set of questions made to build an ontology at the design time.
-              $ref: "#/components/schemas/xsdString"
             mod:designedForTask:
               title: designed for task
               description: The purpose for which the ontology was originally designed.
@@ -1700,10 +1848,6 @@ components:
               title: relies on or reuses
               description: A general property for different kind of case when a semantic resource relies or reuses another one.
               $ref: "#/components/schemas/modReliesOn"
-            mod:semanticArtefactRelation:
-              title: generally related to
-              description: A general property for semantic artefact relations.
-              $ref: "#/components/schemas/modSemanticArtefact"
             mod:similar:
               title: similar
               description: Used to assert that two vocabularies are similar in scope and objectives, independently of the fact that they otherwise refer to each other.
@@ -1712,17 +1856,10 @@ components:
               title: specializes
               description: Indicates that the subject vocabulary defines some subclasses or subproperties of the object vocabulary, or local restrictions on those.
               $ref: "#/components/schemas/modSpecializes"
-            mod:status:
-              title: status
-              $ref: "#/components/schemas/xsdString"
             mod:toDoList:
               title: to-do list
               description: Describes future tasks planned by a resource curator. This property is primarily intended to be used for vocabularies or datasets, but the domain is left open, it can be used for any resource. Use iCalendar Vtodo class and its properties to further describe the task calendar, priorities etc.
               $ref: "#/components/schemas/icalVtodo"
-            mod:URI:
-              title: URI
-              description: The URI of the ontology which is described by this metadata.
-              $ref: "#/components/schemas/xsdAnyURI"
             mod:usedBy:
               title: used by
               description: Indicates that the subject vocabulary is used by the object vocabulary.
@@ -1751,22 +1888,10 @@ components:
               title: version information
               description: The version of the released ontology.   
               $ref: "#/components/schemas/rdfsResource"
-            owl:versionIRI:
-              title: version IRI
-              description: The property that identifies the version IRI of an ontology.      
-              $ref: "#/components/schemas/owlOntology"
             pav:curatedBy:
               title: curator
               description: A curator who restructure the previously authored content and shape it to be appropriate for the intended representation (e.g. by normalizing the fields for being represented in a spreadsheet).
               $ref: "#/components/schemas/pavCuratedBy"
-            pav:createdWith:
-              title: created with
-              description: The tool used for the creation of an ontology.
-              $ref: "#/components/schemas/pavCreatedWith"
-            prov:wasGeneratedBy:
-              title: was generated by
-              description: Generation is the completion of production of a new entity by an activity. This entity did not exist before generation and becomes available for usage after this generation.
-              $ref: "#/components/schemas/provActivity"
             prov:wasInvalidatedBy:
               title: was invalidated by
               description: Invalidation is the start of the destruction, cessation, or expiry of an existing entity by an activity. The entity is no longer available for use (or further invalidation) after invalidation. Any generation or usage of an entity precedes its invalidation."@en ;
@@ -1791,10 +1916,6 @@ components:
               title: funding
               description: A Grant that directly or indirectly provide funding or sponsorship for this item.
               $ref: "#/components/schemas/schemaFunding"
-            schema:includedInDataCatalog:
-              title: indexed or included in catalog or repository
-              description: A data catalog which contains this dataset.
-              $ref: "#/components/schemas/schemaIncludedInDataCatalog"
             schema:translationOfWork:
               title: translation of
               description: The work that this work has been translated from.
@@ -1861,6 +1982,34 @@ components:
       description: A dedicated web-based system that fosters the availability, discoverability and long-term preservation and maintenance of semantic artefacts.
       allOf:
         - type: object
+          required:
+            - '@id'
+            - '@type'
+            - 'dcterms:title'
+            - 'dcterms:description'
+            - 'mod:status'
+            - 'dcterms:language'
+            - 'dcterms:accessRights'
+            - 'dcterms:license'
+            - 'dcterms:rightsHolder'
+            - 'dcat:landingPage'
+            - 'dcat:accessURL'
+            - 'dcterms:identifier'
+            - 'dcat:keyword'
+            - 'dcterms:bibliographicCitation'
+            - 'dcterms:created'
+            - 'dcterms:modified'
+            - 'pav:createdWith'
+            - 'dcterms:creator'
+            - 'dcterms:contributor'
+            - 'dcterms:publisher'
+            - 'dcat:contactPoint'
+            - 'dcterms:subject'
+            - 'dcterms:coverage'
+            - 'dcterms:accrualMethod'
+            - 'dcterms:accrualPeriodicity'
+            - 'prov:wasGeneratedBy'
+
           properties:
             '@id':
               example: https://example.org/SemanticArtefactCatalog/SemanticArtefactCatalogID
@@ -1868,9 +2017,195 @@ components:
               type: array
               items:
                 example: mod:SemanticArtefactCatalog
-        - $ref: '#/components/schemas/dcatCatalog'
+            dcterms:title:
+              title: title
+              description: A name given to the item.
+              $ref: "#/components/schemas/dctermsIdentifier"
+            dcterms:description:
+              title: description
+              description: A free-text account of the item.
+              $ref: "#/components/schemas/dctermsIdentifier"
+            mod:status:
+              title: status
+              $ref: "#/components/schemas/xsdString"
+            dcterms:language:
+              title: language
+              description: A language of the item. This refers to the natural language used for textual metadata (i.e. titles, descriptions, etc) of a cataloged resource (i.e. dataset or service) or the textual values of a dataset distribution
+              $ref: "#/components/schemas/dctermsLinguisticSystem"
+            dcterms:accessRights:
+              title: access rights
+              description: Information about who can access the resource or an indication of its security status.
+              $ref: "#/components/schemas/dctermsRightsStatement"
+            dcterms:license:
+              title: license
+              description: A legal document under which the resource is made available.
+              $ref: "#/components/schemas/dctermsLicenseDocument"
+            dcterms:rightsHolder:
+              title: rights holder
+              description: The person who can be contacted to enquire about an ontology.
+              $ref: "#/components/schemas/dctermsRightsHolder"
+            dcat:landingPage:
+              title: landing page
+              description: A Web page that can be navigated to in a Web browser to gain access to the catalog, a dataset, its distributions and/or additional information.
+              $ref: "#/components/schemas/foafDocument"
+            dcat:accessURL:
+              title: access URL
+              description: A URL of the resource that gives access to a distribution of the dataset. E.g. landing page, feed, SPARQL endpoint.
+              $ref: "#/components/schemas/rdfsResource"
+            dcterms:identifier:
+              title: identifier
+              description: A unique identifier of the item.
+              $ref: "#/components/schemas/dctermsIdentifier"
+            dcat:keyword:
+              title:  keyword/tag
+              description: A keyword or tag describing the resource.
+              $ref: "#/components/schemas/dctermsIdentifier"
+            dcterms:bibliographicCitation:
+              title: bibliographic reference
+              description: A bibliographic reference for the resource.
+              $ref: "#/components/schemas/rdfsLiteral"
+            dcterms:created:
+              title: creation date
+              description: Date of creation of the resource.
+              $ref: "#/components/schemas/rdfsLiteral"
+            dcterms:modified:
+              title: update/modification date
+              description: Most recent date on which the item was changed, updated or modified.
+              $ref: "#/components/schemas/rdfsLiteral"
+            pav:createdWith:
+              title: created with
+              description: The tool used for the creation of an ontology.
+              $ref: "#/components/schemas/pavCreatedWith"
+            dcterms:creator:
+              title: resource creator
+              description: The entity responsible for producing the resource.
+              $ref: "#/components/schemas/foafAgent"
+            dcterms:contributor:
+              title: contributor
+              description: An entity responsible for making contributions to the resource.
+              $ref: "#/components/schemas/dctermsContributor"
+            dcterms:publisher:
+              title: publisher
+              description: The entity responsible for making the item available.
+              $ref: "#/components/schemas/foafAgent"
+            dcat:contactPoint:
+              title: contact point
+              description: Relevant contact information for the cataloged resource. Use of vCard is recommended [VCARD-RDF].
+              $ref: "#/components/schemas/vcardKind"
+            dcterms:subject:
+              title: theme/category
+              description: A main category of the resource. A resource can have multiple themes.
+              $ref: "#/components/schemas/skosConcept"
+            dcterms:coverage:
+              title: coverage
+              description: The spatial or temporal topic of the resource, the spatial applicability of the resource, or the jurisdiction under which the resource is relevant. Spatial topic and spatial applicability may be a named place or a location specified by its geographic coordinates. Temporal topic may be a named period, date, or date range. A jurisdiction may be a named administrative entity or a geographic place to which the resource applies. Recommended practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names [[TGN](https://www.getty.edu/research/tools/vocabulary/tgn/index.html)]. Where appropriate, named places or time periods may be used in preference to numeric identifiers such as sets of coordinates or date ranges.  Because coverage is so broadly defined, it is preferable to use the more specific subproperties Temporal Coverage and Spatial Coverage.
+              $ref: "#/components/schemas/dctermsCoverage"
+            dcterms:accrualMethod:
+              title: accrual method
+              description: The method by which items are added to a collection. Recommended practice is to use a value from the Collection Description Accrual Method Vocabulary.
+              $ref: "#/components/schemas/dctermsAccrualMethod"
+            dcterms:accrualPeriodicity:
+              title: accrual periodicity
+              description: The frequency with which items are added to a collection. Recommended practice is to use a value from the Collection Description Frequency Vocabulary.
+              $ref: "#/components/schemas/dctermsAccrualPeriodicity"
+            prov:wasGeneratedBy:
+              title: was generated by
+              description: Generation is the completion of production of a new entity by an activity. This entity did not exist before generation and becomes available for usage after this generation.
+              $ref: "#/components/schemas/provActivity"
+
         - type: object
           properties:
+            # Optional properties
+            dcterms:conformsTo:
+              title: conforms to
+              description: An established standard to which the described resource conforms.
+              $ref: "#/components/schemas/dctermsStandard"
+            odrl:hasPolicy:
+              title: has policy
+              description: An ODRL conformant policy expressing the rights associated with the resource.
+              $ref: "#/components/schemas/odrlPolicy"
+            dcterms:isReferencedBy:
+              title: is referenced by
+              description: A related resource, such as a publication, that references, cites, or otherwise points to the cataloged resource.
+              $ref: "#/components/schemas/dctermsIsReferencedBy"
+            dcterms:issued:
+              title: release date
+              description: Date of formal issuance (e.g., publication) of the item.
+              $ref: "#/components/schemas/dctermsIdentifier"
+            prov:qualifiedAttribution:
+              title: qualified attribution
+              description: Link to an Agent having some form of responsibility for the resource
+              $ref: "#/components/schemas/provAttribution"
+            dcat:qualifiedRelation:
+              title: qualified relation
+              description: Link to a description of a relationship with another resource.
+              $ref: "#/components/schemas/dcatResource"
+            dcterms:relation:
+              title: resource relation
+              description: A resource with an unspecified relationship to the cataloged item.
+              $ref: "#/components/schemas/dctermsRelation"
+            dcterms:rights:
+              title: rights
+              description: A statement that concerns all rights not addressed with dcterms:license or dcterms:accessRights, such as copyright statements.
+              $ref: "#/components/schemas/dctermsRightsStatement"
+            dcterms:type:
+              title: type/genre
+              description: The nature or genre of the resource.
+              $ref: "#/components/schemas/dcType"
+            dcat:distribution:
+              title: dataset distribution
+              description: An available distribution of the dataset.
+              $ref: "#/components/schemas/dcatDistribution"
+            dcterms:spatial:
+              title: spatial/geographical coverage
+              description: The geographical area covered by the dataset.
+              $ref: "#/components/schemas/dctermsLocation"
+            dcat:spatialResolutionInMeters:
+              title: spatial resolution
+              description: Minimum spatial separation resolvable in a dataset, measured in meters.
+              $ref: "#/components/schemas/xsdDecimal"
+            dcterms:temporal:
+              title: temporal coverage
+              description: The temporal period that the dataset covers.
+              $ref: "#/components/schemas/dctermsPeriodOfTime"
+            dcat:temporalResolution:
+              title: temporal resolution
+              description: Minimum time period resolvable in the dataset.
+              $ref: "#/components/schemas/xsdDuration"
+            dcat:catalog:
+              title: catalog
+              description: A catalog whose contents are of interest in the context of this catalog.
+              $ref: "#/components/schemas/dcatCatalog"
+            dcat:dataset:
+              title: dataset
+              description: A collection of data that is listed in the catalog.
+              $ref: "#/components/schemas/dcatDataset"
+            dcterms:hasPart:
+              title: has part
+              description: An item that is listed in the catalog.
+              $ref: "#/components/schemas/dcatResource"
+            foaf:homepage:
+              title: homepage
+              description: A homepage of the catalog (a public Web document usually available in HTML).
+              $ref: "#/components/schemas/foafDocument"
+            dcat:record:
+              title: catalog record
+              description: A record describing the registration of a single dataset or data service that is part of the catalog.
+              type: array
+              items:
+                $ref: "#/components/schemas/dcatCatalogRecord"
+            dcat:resource:
+              title: resource
+              description: A resource that is listed in the catalog.
+              $ref: "#/components/schemas/dcatResource"
+            dcat:service:
+              title: service
+              description: A site or end-point that is listed in the catalog.
+              $ref: "#/components/schemas/dcatDataService"
+            dcat:themeTaxonomy:
+              title: themes
+              description: A knowledge organization system (KOS) used to classify catalog's datasets and services.
+              $ref: "#/components/schemas/rdfsResource"
             adms:supportedSchema:
               title: supported schema/format
               description: A schema according to which the Asset Repository can provide data about its content.
@@ -1883,22 +2218,10 @@ components:
               title: more permissions
               description: A related resource which describes additional permissions or alternative licenses for a Work which may be available.
               $ref: "#/components/schemas/rdfsResource"
-            dcat:accessURL:
-              title: access URL
-              description: A URL of the resource that gives access to a distribution of the dataset. E.g. landing page, feed, SPARQL endpoint.
-              $ref: "#/components/schemas/rdfsResource"
             dcterms:abstract:
               title: abstract
               description: A summary of the resource.
               $ref: "#/components/schemas/dctermsAbstract"
-            dcterms:accrualMethod:
-              title: accrual method
-              description: The method by which items are added to a collection. Recommended practice is to use a value from the Collection Description Accrual Method Vocabulary.
-              $ref: "#/components/schemas/dctermsAccrualMethod"
-            dcterms:accrualPeriodicity:
-              title: accrual periodicity
-              description: The frequency with which items are added to a collection. Recommended practice is to use a value from the Collection Description Frequency Vocabulary.
-              $ref: "#/components/schemas/dctermsAccrualPeriodicity"
             dcterms:accrualPolicy:
               title: accrual policy
               description: The policy governing the addition of items to a collection. Recommended practice is to use a value from the Collection Description Accrual Policy Vocabulary.
@@ -1910,34 +2233,10 @@ components:
             dcterms:audience:
               title: target audience
               description: A class of agents for whom the resource is intended or useful.
-            dcterms:bibliographicCitation:
-              title: bibliographic reference
-              description: A bibliographic reference for the resource.
-              $ref: "#/components/schemas/rdfsLiteral"
-            dcterms:created:
-              title: creation date
-              description: Date of creation of the resource.
-              $ref: "#/components/schemas/rdfsLiteral"
-            dcterms:contributor:
-              title: contributor
-              description: An entity responsible for making contributions to the resource.
-              $ref: "#/components/schemas/dctermsContributor"
-            dcterms:coverage:
-              title: coverage
-              description: The spatial or temporal topic of the resource, the spatial applicability of the resource, or the jurisdiction under which the resource is relevant. Spatial topic and spatial applicability may be a named place or a location specified by its geographic coordinates. Temporal topic may be a named period, date, or date range. A jurisdiction may be a named administrative entity or a geographic place to which the resource applies. Recommended practice is to use a controlled vocabulary such as the Getty Thesaurus of Geographic Names [[TGN](https://www.getty.edu/research/tools/vocabulary/tgn/index.html)]. Where appropriate, named places or time periods may be used in preference to numeric identifiers such as sets of coordinates or date ranges.  Because coverage is so broadly defined, it is preferable to use the more specific subproperties Temporal Coverage and Spatial Coverage.
-              $ref: "#/components/schemas/dctermsCoverage"
             dcterms:isPartOf:
               title: is part of (view of)
               description: Shall be used to identify a subset or a view of an ontology
               $ref: "#/components/schemas/dctermsIsPartOf"
-            dcterms:modified:
-              title: modification date
-              description: Date on which the resource was changed.
-              $ref: "#/components/schemas/rdfsLiteral"
-            dcterms:rightsHolder:
-              title: rights holder
-              description: The person who can be contacted to enquire about an ontology.
-              $ref: "#/components/schemas/dctermsRightsHolder"
             dcterms:source:
               title: source
               description: The ontology(ies) referred to while creating the present ontology.
@@ -2053,9 +2352,6 @@ components:
               title: to-do list
               description: Describes future tasks planned by a resource curator. This property is primarily intended to be used for vocabularies or datasets, but the domain is left open, it can be used for any resource. Use iCalendar Vtodo class and its properties to further describe the task calendar, priorities etc.
               $ref: "#/components/schemas/icalVtodo"
-            mod:status:
-              title: status
-              $ref: "#/components/schemas/xsdString"
             mod:usedInProject:
               title: used in project
               description: An ontology that is used in a project.      
@@ -2075,14 +2371,6 @@ components:
               title: curator
               description: A curator who restructure the previously authored content and shape it to be appropriate for the intended representation (e.g. by normalizing the fields for being represented in a spreadsheet).
               $ref: "#/components/schemas/pavCuratedBy"
-            pav:createdWith:
-              title: created with
-              description: The tool used for the creation of an ontology.
-              $ref: "#/components/schemas/pavCreatedWith"
-            prov:wasGeneratedBy:
-              title: was generated by
-              description: Generation is the completion of production of a new entity by an activity. This entity did not exist before generation and becomes available for usage after this generation.
-              $ref: "#/components/schemas/provActivity"
             rdfs:comment:
               title: notes or comments
               description: A description of the subject resource.      
@@ -2188,24 +2476,147 @@ components:
       description: A specific representation and/or serialization of a semantic artefact.
       allOf:
         - type: object
+          required:
+            - '@id'
+            - '@type'
+            - 'dcterms:title'
+            - 'dcterms:description'
+            - 'dcat:accessURL'
+            - 'dcat:downloadURL'
+            - 'dcat:byteSize'
+            - 'dcterms:created'
+            - 'dcterms:modified'
+            - 'mod:hasRepresentationLanguage'
+            - 'mod:hasSyntax'
+            - 'mod:conformsToKnowledgeRepresentationParadigm'
+            - 'mod:definitionProperty'
+            - 'mod:prefLabelProperty'
+            - 'mod:synonymProperty'
+            - 'mod:usedEngineeringMethodology'
           properties:
+            # required properties
             '@id':
               example: https://example.org/SemanticArtefactDistribution/SemanticArtefactDistributionID
             '@type':
               type: array
               items:
                 example: mod:SemanticArtefactDistribution
-        - $ref: '#/components/schemas/dcatDistribution'
-        - type: object
-          properties:
-            cc:useGuidelines:
-              title: use guidelines
-              description: A related resource which defines non-binding use guidelines for the work.
+            dcterms:title:
+              title: title
+              description: A name given to the distribution.
+              $ref: "#/components/schemas/rdfsLiteral"
+            dcterms:description:
+              title: description
+              description: A free-text account of the distribution.
+              $ref: "#/components/schemas/rdfsLiteral"
+            dcat:accessURL:
+              title: access URL
+              description: A URL of the resource that gives access to a distribution of the dataset. E.g. landing page, feed, SPARQL endpoint.
               $ref: "#/components/schemas/rdfsResource"
+            dcat:downloadURL:
+              title: download URL
+              description: The URL of the downloadable file in a given format. E.g. CSV file or RDF file. The format is indicated by the distribution's dcterms:format and/or dcat:mediaType
+              $ref: "#/components/schemas/rdfsResource"
+            dcat:byteSize:
+              title: byte size
+              description: The size of a distribution in bytes.
+              $ref: "#/components/schemas/xsdDecimal"
             dcterms:created:
               title: creation date
               description: Date of creation of the resource.
               $ref: "#/components/schemas/rdfsLiteral"
+            dcterms:modified:
+              title: update/modification date
+              description: Most recent date on which the distribution was changed, updated or modified.
+              $ref: "#/components/schemas/rdfsLiteral"
+            mod:hasRepresentationLanguage:
+              title: representation language
+              description: A language that is used to create an ontology.
+              $ref: "#/components/schemas/xsdString"
+            mod:hasSyntax:
+              title: syntax
+              description: The syntax followed in the creation of an ontology.
+              $ref: "#/components/schemas/xsdAnyURI"
+            mod:conformsToKnowledgeRepresentationParadigm:
+              title: knowledge representation paradigm
+              description: A representation formalism that is followed to describe knowledge in an ontology. Example includes description logics, first order logic, etc. 
+              $ref: "#/components/schemas/modKnowledgeRepresentationParadigm"
+            mod:definitionProperty:
+              title: object definition property
+              description: Property used to specify objects' definition.
+              $ref: "#/components/schemas/xsdAnyURI"
+            mod:prefLabelProperty:
+              title: object preferred label property
+              description: Property used to specify objects' preferred label.
+              $ref: "#/components/schemas/xsdAnyURI"
+            mod:synonymProperty:
+              title: object synonym property
+              description: Property used to specify objects' synonyms.
+              $ref: "#/components/schemas/xsdAnyURI"
+            mod:usedEngineeringMethodology:
+              title: engineering methodology
+              description: A methodolgy following which an ontology is created.
+              $ref: "#/components/schemas/modEngineeringMethodology"
+
+        - type: object
+          # Optional properties
+          properties:
+            dcat:accessService:
+              title: access service
+              description: A data service that gives access to the distribution of the dataset
+              $ref: "#/components/schemas/dcatDataService"
+            dcterms:accessRights:
+              title: access rights
+              description: A rights statement that concerns how the distribution is accessed.
+              $ref: "#/components/schemas/dctermsRightsStatement"
+            dcat:compressFormat:
+              title: compression format
+              description: The compression format of the distribution in which the data is contained in a compressed form, e.g. to reduce the size of the downloadable file.
+              $ref: "#/components/schemas/dctermsMediaType"
+            dcterms:conformsTo:
+              title: conforms to
+              description: An established standard to which the distribution conforms.
+              $ref: "#/components/schemas/dctermsStandard"
+            dcterms:format:
+              title: format
+              description: The file format of the distribution.
+              $ref: "#/components/schemas/dctermsMediaTypeOrExtent"
+            odrl:hasPolicy:
+              title: has policy
+              description: An ODRL conformant policy expressing the rights associated with the distribution.
+              $ref: "#/components/schemas/odrlPolicy"
+            dcterms:issued:
+              title: release date
+              description: Date of formal issuance (e.g., publication) of the distribution.
+              $ref: "#/components/schemas/rdfsLiteral"
+            dcterms:license:
+              title: license
+              description: A legal document under which the distribution is made available.
+              $ref: "#/components/schemas/dctermsLicenseDocument"
+            dcat:mediaType:
+              title: media type
+              description: The media type of the distribution as defined by IANA.
+              $ref: "#/components/schemas/dctermsMediaType"
+            dcat:packageFormat:
+              title: packaging format
+              description: The package format of the distribution in which one or more data files are grouped together, e.g. to enable a set of related files to be downloaded together.
+              $ref: "#/components/schemas/dctermsMediaType"
+            dcterms:rights:
+              title: rights
+              description: Information about rights held in and over the distribution.
+              $ref: "#/components/schemas/dctermsRightsStatement"
+            dcat:spatialResolutionInMeters:
+              title: spatial resolution
+              description: The minimum spatial separation resolvable in a dataset distribution, measured in meters.
+              $ref: "#/components/schemas/xsdDecimal"
+            dcat:temporalResolution:
+              title: temporal resolution
+              description: Minimum time period resolvable in the dataset distribution.
+              $ref: "#/components/schemas/xsdDuration"
+            cc:useGuidelines:
+              title: use guidelines
+              description: A related resource which defines non-binding use guidelines for the work.
+              $ref: "#/components/schemas/rdfsResource"
             dcterms:dateSubmitted:
               title: submission date
               description: Date of submission of the resource.
@@ -2254,17 +2665,9 @@ components:
               title: number of classes with a single child
               description: Number of classes that have only one subclass in the is-a hierarchy.
               $ref: "#/components/schemas/xsdNonNegativeInteger"
-            mod:conformsToKnowledgeRepresentationParadigm:
-              title: knowledge representation paradigm
-              description: A representation formalism that is followed to describe knowledge in an ontology. Example includes description logics, first order logic, etc. 
-              $ref: "#/components/schemas/modKnowledgeRepresentationParadigm"
             mod:createdProperty:
               title: object creation date property
               description: Property used to specify the date of creation of a class or another object in the ontology.
-              $ref: "#/components/schemas/xsdAnyURI"
-            mod:definitionProperty:
-              title: object definition property
-              description: Property used to specify objects' definition.
               $ref: "#/components/schemas/xsdAnyURI"
             mod:fairAssessment:
               title: FAIR assessment
@@ -2278,14 +2681,6 @@ components:
               title: formality level
               description: The level of formality of an ontology.
               $ref: "#/components/schemas/xsdString"
-            mod:hasRepresentationLanguage:
-              title: representation language
-              description: A language that is used to create an ontology.
-              $ref: "#/components/schemas/xsdString"
-            mod:hasSyntax:
-              title: syntax
-              description: The syntax followed in the creation of an ontology.
-              $ref: "#/components/schemas/xsdAnyURI"
             mod:hierarchyProperty:
               title: transitive hierarchy property
               description: Property used to specify the hierarchy (e.g. rdfs:subClassOf or skos:broader).
@@ -2353,22 +2748,10 @@ components:
               title: object obsolete property
               description: Property used to specify obsolete objects.
               $ref: "#/components/schemas/xsdAnyURI"
-            mod:prefLabelProperty:
-              title: object preferred label property
-              description: Property used to specify objects' preferred label.
-              $ref: "#/components/schemas/xsdAnyURI"
             mod:sampleQueries:
               title: sample queries
               description: A set of queries (may be SPARQL, DL Queries) that are provided along with an ontology.
               $ref: "#/components/schemas/xsdAnyURI"
-            mod:synonymProperty:
-              title: object synonym property
-              description: Property used to specify objects' synonyms.
-              $ref: "#/components/schemas/xsdAnyURI"
-            mod:usedEngineeringMethodology:
-              title: engineering methodology
-              description: A methodolgy following which an ontology is created.
-              $ref: "#/components/schemas/modEngineeringMethodology"
             owl:deprecated:
               title: deprecated
               description: The annotation property that indicates that a given entity has been deprecated.
