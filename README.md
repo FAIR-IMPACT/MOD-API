@@ -10,3 +10,7 @@ This Application Programming Interface (API) has been developed to promote inter
 For full details of the API please refer to the [FAIR-IMPACT D4.3 Deliverable](https://zenodo.org/records/12579779).
 
 The Swagger specification is available here: https://fair-impact.github.io/MOD-API .
+
+Validators for MOD-API implementation:
+- https://github.com/syphax-bouazzouni/mod-api-validator
+- https://github.com/MaastrichtU-IDS/mod-api-conformance
